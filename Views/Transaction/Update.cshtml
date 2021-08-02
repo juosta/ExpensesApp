@@ -1,5 +1,7 @@
 ﻿@model ExpensesApp.Models.ViewModels.CreateTransactionVM
-
+@{
+    ViewData["Title"] = "Edit Transaction";
+}
 
 <form method="post" asp-action="Update">
     @*if the filename is the same as the action asp-action="Update" is optional*@
@@ -20,6 +22,7 @@
                     </div>
                     <div class="col-4">
                         <label asp-for="TransactionCategoryId"></label>
+                        <a asp-action="Create" asp-controller="Category"><i class="fa fa-plus" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <div class="form-group row">

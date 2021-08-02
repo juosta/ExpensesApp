@@ -26,7 +26,7 @@ namespace ExpensesApp.Controllers
         public async Task<IActionResult> Create()
         {
             var userId = GetUserId();
-            TransactionVM transactionVM = new TransactionVM()
+            var transactionVM = new CreateTransactionVM()
             {
                 CategoryDropDown = await _categoryService.GetCategoryListAsync(userId.Value)
             };

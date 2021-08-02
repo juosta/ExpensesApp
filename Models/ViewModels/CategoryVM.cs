@@ -1,4 +1,5 @@
 ﻿using ExpensesApp.Models.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,5 +20,7 @@ namespace ExpensesApp.Models.ViewModels
         public CategoryType Type { get; set; }
 
         public Guid UserId { get; set; }
+
+        public IEnumerable<SelectListItem> CategoryTypeDropDown { get; set; }
     }
 }

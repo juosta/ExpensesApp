@@ -1,6 +1,8 @@
 ﻿using ExpensesApp.Data;
 using ExpensesApp.Models;
+using ExpensesApp.Models.Enums;
 using ExpensesApp.Models.ViewModels;
+using ExpensesApp.Utility;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -36,6 +38,20 @@ namespace ExpensesApp.Services
                 UserId = i.UserId
             }).ToListAsync();
         }
+
+        public async Task<CategoryVM> GetById(Guid id)
+        {
+            var category = await _db.TransactionCategories.Where(x => x.Id == id).Select(i => new CategoryVM
+            {
+                Id = i.Id,
+                CategoryName = i.CategoryName,
+                Type = i.Type,
+                UserId = i.UserId
+            }).FirstOrDefaultAsync();
+            category.CategoryTypeDropDown = Helper.GetDropDownItems<CategoryType>();
+            return category;
+        }
+
         public async Task<int> AddUpdate(CategoryVM model)
         {
             if (model.Id != null)
@@ -59,5 +75,16 @@ namespace ExpensesApp.Services
             return 2;
 
         }
-    }
+
+        public async Task<int> Delete(Guid id)
+        {
+            var category = _db.TransactionCategories.FirstOrDefault(x => x.Id == id);
+            if (category != null)
+            {
+                _db.TransactionCategories.Remove(category);
+                return await _db.SaveChangesAsync();
+            }
+            return 0;
+        }
+        }
 }
