@@ -11,6 +11,7 @@ namespace ExpensesApp.Models.Enums
         Must,
         [Display(Name = "Nice to have")]
         NiceToHave,
-        Useless
+        Useless,
+        Income
     }
 }

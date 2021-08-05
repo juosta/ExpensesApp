@@ -1,4 +1,5 @@
-﻿using ExpensesApp.Models.ViewModels;
+﻿using ExpensesApp.Models.Enums;
+using ExpensesApp.Models.ViewModels;
 using ExpensesApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,11 +24,12 @@ namespace ExpensesApp.Controllers
             return View(objList);
         }
         // Get create
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create(TransactionType type)
         {
             var userId = GetUserId();
             var transactionVM = new CreateTransactionVM()
             {
+                Type = type,
                 CategoryDropDown = await _categoryService.GetCategoryListAsync(userId.Value)
             };
             return View(transactionVM);
@@ -53,6 +55,11 @@ namespace ExpensesApp.Controllers
         public async Task<IActionResult> Update(CreateTransactionVM obj)
         {
             await _transactionService.AddUpdate(obj);
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            await _transactionService.Delete(id);
             return RedirectToAction("Index");
         }
     }

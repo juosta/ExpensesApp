@@ -77,5 +77,15 @@ namespace ExpensesApp.Services
             return 2;
 
         }
+        public async Task<int> Delete(Guid id)
+        {
+            var transaction = _db.Transactions.FirstOrDefault(x => x.Id == id);
+            if (transaction != null)
+            {
+                _db.Transactions.Remove(transaction);
+                return await _db.SaveChangesAsync();
+            }
+            return 0;
+        }
     }
 }
