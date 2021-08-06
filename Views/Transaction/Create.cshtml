@@ -7,7 +7,7 @@
     <div class="border p-3">
         @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
         <div class="form-group row">
-            <h2 class="text-black-50 pl-3">Add Expense</h2>
+            <h2 class="text-black-50 pl-3">Add @Model.Type</h2>
         </div>
         <div class="row">
             <div class="col-12">
@@ -19,7 +19,7 @@
                         <label asp-for="Amount"></label>
                     </div>
                     <div class="col-4">
-                        <label asp-for="TransactionCategoryId"></label>
+                        <label asp-for="TransactionCategoryId">@Model.Type Category</label>
                         <a asp-action="Create" asp-controller="Category"><i class="fa fa-plus" aria-hidden="true"></i></a>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-75" value="Add expense" />
+                            <input type="submit" class="btn btn-info w-75" value="Add @Model.Type" />
                         </div>
                         <div class="col">
                             <a asp-action="Index" class="btn btn-danger w-75">Back</a>
