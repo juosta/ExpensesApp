@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpensesApp.Services;
 
 namespace ExpensesApp.Controllers
 {
@@ -16,12 +17,14 @@ namespace ExpensesApp.Controllers
         private readonly ApplicationDbContext _db;
         UserManager<ApplicationUser> _userManager;
         SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserService _userService;
         public AccountController(ApplicationDbContext db, UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, IUserService userService)
         {
             _db = db;
             _userManager = userManager;
             _signInManager = signInManager;
+           _userService = userService;
         }
         public IActionResult Login()
         {
@@ -66,6 +69,7 @@ namespace ExpensesApp.Controllers
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);
+                await _userService.CreateDefaultCategories(user.Id);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Transaction");

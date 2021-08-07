@@ -47,6 +47,7 @@ namespace ExpensesApp
             services.AddControllersWithViews();
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IUserService, UserService>();
             services.AddRazorPages();
         }
 
