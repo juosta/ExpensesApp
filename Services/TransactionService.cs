@@ -25,6 +25,7 @@ namespace ExpensesApp.Services
             return await _db.Transactions.Where(x => x.UserId == userId).Select(i => new TransactionVM
             {
                 Id = i.Id,
+                Date = i.Date,
                 Title = i.Title,
                 Amount = i.Amount,
                 TransactionCategoryId = i.TransactionCategoryId,
@@ -40,6 +41,7 @@ namespace ExpensesApp.Services
             var transaction = await _db.Transactions.Where(x => x.Id == id).Select(i => new CreateTransactionVM
             {
                 Id = i.Id,
+                Date = i.Date,
                 Title = i.Title,
                 Amount = i.Amount,
                 TransactionCategoryId = i.TransactionCategoryId,
@@ -58,6 +60,7 @@ namespace ExpensesApp.Services
                 var transaction = _db.Transactions.FirstOrDefault(x => x.Id == model.Id);
                 transaction.TransactionCategoryId = model.TransactionCategoryId;
                 transaction.Type = model.Type;
+                transaction.Date = model.Date;
                 transaction.Title = model.Title;
                 transaction.Amount = model.Amount;
                 await _db.SaveChangesAsync();
@@ -69,6 +72,7 @@ namespace ExpensesApp.Services
                 TransactionCategoryId = model.TransactionCategoryId,
                 UserId = model.UserId,
                 Type = model.Type,
+                Date = model.Date,
                 Title = model.Title,
                 Amount = model.Amount
             };

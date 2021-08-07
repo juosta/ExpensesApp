@@ -28,6 +28,12 @@ namespace ExpensesApp.Services
                 Value = i.Id.ToString()
             }).ToListAsync();
         }
+
+        public async Task<int> GetTransactionCountById(Guid id)
+        {
+            return await _db.Transactions.CountAsync(x => x.TransactionCategoryId == id);
+        }
+
         public async Task<List<CategoryVM>> GetAllCategories(Guid userId)
         {
             return await _db.TransactionCategories.Where(x => x.UserId == userId).Select(i => new CategoryVM
@@ -76,15 +82,31 @@ namespace ExpensesApp.Services
 
         }
 
-        public async Task<int> Delete(Guid id)
+        public async Task<int> Delete(Guid id, Guid? categoryIdToChange = null)
         {
             var category = _db.TransactionCategories.FirstOrDefault(x => x.Id == id);
-            if (category != null)
+            if (category == null)
             {
-                _db.TransactionCategories.Remove(category);
-                return await _db.SaveChangesAsync();
+                return 0;
             }
-            return 0;
+            var categoryTransactions = await _db.Transactions.Where(x => x.TransactionCategoryId == id).ToListAsync();
+
+            if (categoryIdToChange == null)
+            {
+                foreach (var transaction in categoryTransactions) 
+                {
+                    _db.Transactions.Remove(transaction);
+                };
+            }
+            else
+            {
+                foreach (var transaction in categoryTransactions)
+                {
+                    transaction.TransactionCategoryId = categoryIdToChange.Value;
+                };
+            }
+            _db.TransactionCategories.Remove(category);
+            return await _db.SaveChangesAsync();
         }
-        }
+    }
 }

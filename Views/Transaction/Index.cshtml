@@ -5,7 +5,7 @@
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">My Transactions</h2>
+            <h2 class="text-light">My Transactions</h2>
         </div>
         <div class="col-6 text-right">
             <a asp-controller="Transaction" asp-action="Create" asp-route-Type="@ExpensesApp.Models.Enums.TransactionType.Expense" class="btn btn-primary">Add New Expense</a>
@@ -13,107 +13,144 @@
         </div>
     </div>
     <br />
-
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <button id="tab-btn-1" class="tab-btn nav-link active">Expenses</button>
-        </li>
-        <li class="nav-item">
-            <button id="tab-btn-2" class="tab-btn nav-link">Income</button>
-        </li>
-    </ul>
-        <div id="tab-1" class="tab show">
-            @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).Count() > 0)
-            {
-                <table class="table table-bordered table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>
-                                Expense
-                            </th>
-                            <th>
-                                Amount
-                            </th>
-                            <th>
-                                Category
-                            </th>
-                            <th>
-                                Changes
-                            </th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-
-                        @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense))
-                        {
-                            <tr>
-                                <td width="25%">@transaction.Title</td>
-                                <td width="25%">@transaction.Amount</td>
-                                <td width="25%">@transaction.CategoryName</td>
-                                <td width="25%">
-                                    <div class="w-100 btn-group">
-                                        <a asp-controller="Transaction" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
-                                        <a asp-controller="Transaction" asp-action="Delete" asp-route-Id="@transaction.Id" class="btn btn-danger mx-1">Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-
-                </table>
-
-            }
-            else
-            {
-                <p>No items created yet</p>
-            }
+    <div class="row pt-4">
+        <div class="col-8">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <button id="tab-btn-1" class="tab-btn nav-link active">Expenses</button>
+                </li>
+                <li class="nav-item">
+                    <button id="tab-btn-2" class="tab-btn nav-link">Income</button>
+                </li>
+            </ul>
+            </div>
+            <div class="col-4">
+                @{
+                    var expenses = Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense);
+                    Double totalExpenses = 0;
+                    foreach (var transaction in expenses)
+                    {
+                        totalExpenses += transaction.Amount;
+                    }
+                    var income = Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income);
+                    Double totalIncome = 0;
+                    foreach (var transaction in income)
+                    {
+                        totalIncome += transaction.Amount;
+                    }
+                    var balance = totalIncome - totalExpenses;
+                }
+                <h3 class="balance text-right">Your balance: @balance</h3>
+                </div>
         </div>
-        <div id="tab-2" class="tab">
-            @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).Count() > 0)
-            {
-                <table class="table table-bordered table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>
-                                Income
-                            </th>
-                            <th>
-                                Amount
-                            </th>
-                            <th>
-                                Category
-                            </th>
-                            <th>
-                                Changes
-                            </th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-
-                        @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income))
-                        {
+            <div id="tab-1" class="tab show">
+                @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).Count() > 0)
+                {
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
                             <tr>
-                                <td width="25%">@transaction.Title</td>
-                                <td width="25%">@transaction.Amount</td>
-                                <td width="25%">@transaction.CategoryName</td>
-                                <td width="25%">
-                                    <div class="w-100 btn-group">
-                                        <a asp-controller="Transaction" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
-                                        <a asp-controller="Transaction" asp-action="Delete" asp-route-Id="@transaction.Id" class="btn btn-danger mx-1">Delete</a>
-                                    </div>
-                                </td>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+                                    Expense
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Changes
+                                </th>
                             </tr>
-                        }
-                    </tbody>
 
-                </table>
+                        </thead>
+                        <tbody>
 
-            }
-            else
-            {
-                <p>No items created yet</p>
-            }
+                            @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense))
+                            {
+                                <tr>
+                                    <td width="20%">@transaction.Date</td>
+                                    <td width="20%">@transaction.Title</td>
+                                    <td width="15%">@transaction.Amount</td>
+                                    <td width="20%">@transaction.CategoryName</td>
+                                    <td width="25%">
+                                        <div class="w-100 btn-group">
+                                            <a asp-controller="Transaction" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
+                                            @using (Html.BeginForm("Delete", "Transaction", new { id = transaction.Id }, FormMethod.Post))
+                                            {
+                                                @* Other properties of Model *@
+                                                <button type="submit" class="btn btn-danger mx-1">Delete</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                }
+                else
+                {
+                    <p>No items created yet</p>
+                }
+            </div>
+            <div id="tab-2" class="tab">
+                @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).Count() > 0)
+                {
+                    <table class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+                                    Income
+                                </th>
+                                <th>
+                                    Amount
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Changes
+                                </th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+
+                            @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income))
+                            {
+                                <tr>
+                                    <td width="20%">@transaction.Date</td>
+                                    <td width="20%">@transaction.Title</td>
+                                    <td width="15%">@transaction.Amount</td>
+                                    <td width="20%">@transaction.CategoryName</td>
+                                    <td width="25%">
+                                        <div class="w-100 btn-group">
+                                            <a asp-controller="Transaction" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
+                                            @using (Html.BeginForm("Delete", "Transaction", new { id = transaction.Id }, FormMethod.Post))
+                                            {
+                                                @* Other properties of Model *@
+                                                <button type="submit" class="btn btn-danger mx-1">Delete</button>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+
+                }
+                else
+                {
+                    <p>No items created yet</p>
+                }
+            </div>
         </div>
-</div>

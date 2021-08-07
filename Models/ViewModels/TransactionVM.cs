@@ -12,6 +12,7 @@ namespace ExpensesApp.Models.ViewModels
         [DisplayName("Expense Category")]
         public Guid TransactionCategoryId { get; set; }
         public string CategoryName { get; set; }
+        public DateTime Date { get; set; }
         public string Title { get; set; }
         public Guid UserId { get; set; }
         public TransactionType Type { get; set; }

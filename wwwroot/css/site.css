@@ -87,4 +87,57 @@ body {
 
 .show{
     display: block;
+    opacity: 1;
 }
+
+.btn-primary {
+    background-color: #7B96B4;
+    border-color: #5586BA;
+}
+
+    .btn-primary:hover {
+        background-color: #5586BA;
+        border-color: #48749E;
+    }
+
+.btn-danger {
+    background-color: #D6A189;
+    border-color: #D37F5B;
+}
+
+    .btn-danger:hover {
+        background-color: #D37F5B;
+        border-color: #C1714F;
+    }
+
+.modal-content {
+    padding: 30px;
+    transform: translate(0,50px);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+
+.modal-h1 {
+    font-size: 25px;
+}
+
+.modal-p {
+    margin: 30px 0 20px;
+}
+
+.select-category-area{
+    display: none;
+}
+
+.btn.x-button {
+    color: #7B96B4;
+    border: none;
+    top: 4px;
+    position: absolute;
+    right: 9px;
+    font-size: 23px;
+}
+
+    .btn.x-button:hover {
+        color: #D37F5B;
+    }

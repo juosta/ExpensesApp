@@ -7,7 +7,7 @@
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Categories list</h2>
+            <h2 class="text-light">Categories list</h2>
         </div>
         <div class="col-6 text-right">
             <a asp-controller="Category" asp-action="Create" class="btn btn-primary">Add New Category</a>
@@ -32,15 +32,16 @@
             </thead>
             <tbody>
 
-                @foreach (var transaction in Model)
+                @foreach (var category in Model)
                 {
                     <tr>
-                        <td width="30%">@transaction.CategoryName</td>
-                        <td width="30%">@transaction.Type</td>
+                        <td width="30%">@category.CategoryName</td>
+                        <td width="30%">@category.Type</td>
                         <td width="40%">
                             <div class="w-100 btn-group">
-                                <a asp-controller="Category" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
-                                <a asp-controller="Category" asp-action="Delete" asp-route-Id="@transaction.Id" class="btn btn-danger mx-1">Delete</a>
+                                <a asp-controller="Category" asp-action="Update" asp-route-Id="@category.Id" class="btn btn-primary mx-1">Update</a>
+                                @*<a asp-controller="Category" asp-action="Delete" asp-route-Id="@category.Id" class="btn btn-danger mx-1 delete-cat-btn" onclick="onCategoryDelete(@category.Id);">Delete</a>*@
+                                <button class="btn btn-danger mx-1 delete-cat-btn" onclick="onCategoryDelete('@category.Id');">Delete</button>
                             </div>
                         </td>
                     </tr>
@@ -54,5 +55,5 @@
     {
         <p>No items created yet</p>
     }
-
+    <partial name="_DeleteCategory" model="@Model"/>
 </div>

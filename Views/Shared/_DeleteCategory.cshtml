@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ExpensesApp.Models.ViewModels.CategoryVM>
+
+<div class="modal fade" role="dialog" id="categoryDelPart" data-backdrop="static" data-keyboard="false" runat="server">
+    <input id="categoryIdToDelete" name="categoryId" value="" hidden/>
+    @*style="display:block; opacity:1;">*@
+    <div class="modal-dialog">
+        <div class="modal-content row">
+        <button id="x-button" class="btn x-button"><i class="fa fa-times" aria-hidden="true"></i></button>
+            <div class="col-12 text-center">
+                <h1 class="modal-h1">This category has transactions</h1>
+                <p class="modal-p">Would you like to delete all of the transactions of this category, or change catgeory for these transactions?</p>
+                <div class="text-center modal-button-group">
+                    <button id="change-category-btn" class="btn btn-primary">Change Categories</button>
+                    <button class="btn btn-danger delete-transaction-btn" onclick="deleteCategory(true);">Delete</button>
+                </div>
+            </div>
+            <br />
+            <div class="col-12 select-category-area" id="select-category-area">
+                <div class="form-group row">
+                    <div class="col-12">
+                        <label>Select which category would You like to change to</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12">
+                        <select id="categoryIdToChange" class="form-control">
+                            @foreach (var category in Model)
+                            {
+                                <option value="@category.Id">@category.CategoryName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 text-center">
+                        <button class="btn btn-primary " onclick="deleteCategory(false);">Change Category</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}

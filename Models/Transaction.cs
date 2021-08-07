@@ -16,7 +16,10 @@ namespace ExpensesApp.Models
         public Guid UserId { get; set; }
 
         public TransactionType Type { get; set; }
-      
+
+        [Required]
+        public DateTime Date { get; set; }
+
         [Required]
         public string Title { get; set; }
 

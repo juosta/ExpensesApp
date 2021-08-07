@@ -20,6 +20,11 @@ namespace ExpensesApp.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var userId = GetUserId();
+            if(userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
             var objList = await _transactionService.GetAll(GetUserId().Value);
             return View(objList);
         }
@@ -57,6 +62,9 @@ namespace ExpensesApp.Controllers
             await _transactionService.AddUpdate(obj);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
             await _transactionService.Delete(id);

@@ -13,6 +13,7 @@ namespace ExpensesApp.Services
         public Task<int> AddUpdate(CategoryVM model);
         public Task<List<CategoryVM>> GetAllCategories(Guid userId);
         public Task<CategoryVM> GetById(Guid id);
-        public Task<int> Delete(Guid id);
+        public Task<int> Delete(Guid id,Guid? categoryIdToChange = null);
+        public Task<int> GetTransactionCountById(Guid id);
     }
 }

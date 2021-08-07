@@ -58,8 +58,10 @@ namespace ExpensesApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
-        {
+        {            
             await _categoryService.Delete(id);
             return RedirectToAction("Index");
         }
