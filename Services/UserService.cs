@@ -23,8 +23,7 @@ namespace ExpensesApp.Services
         public async Task<int> CreateDefaultCategories(Guid id)
         {
             var categories = new List<TransactionCategory> {
-                new TransactionCategory{CategoryName = "Salary", UserId = id, Type=CategoryType.Income},
-                new TransactionCategory{CategoryName = "Other", UserId = id, Type=CategoryType.Income},
+                new TransactionCategory{CategoryName = "Income", UserId = id, Type=CategoryType.Income},
                 new TransactionCategory{CategoryName = "Food", UserId = id, Type=CategoryType.Must},
                 new TransactionCategory{CategoryName = "Clothes", UserId = id, Type=CategoryType.Must},
                 new TransactionCategory{CategoryName = "Utilities", UserId = id, Type=CategoryType.Must},

@@ -21,14 +21,17 @@
                     <div class="col-3">
                         <label asp-for="Amount"></label>
                     </div>
-                    <div class="col-3">
-                        <label asp-for="TransactionCategoryId">@Model.Type Category</label>
-                        <a asp-action="Create" asp-controller="Category"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    @if (Model.Type == ExpensesApp.Models.Enums.TransactionType.Expense)
+                    {
+                        <div class="col-3">
+                            <label asp-for="TransactionCategoryId">@Model.Type Category</label>
+                            <a asp-action="Create" asp-controller="Category"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        </div>
+                    }
                     </div>
-                </div>
                 <div class="form-group row">
                     <div class="col-3">
-                        <input asp-for="Date" class="form-control" />
+                        <input asp-for="Date" type="date" value="@DateTime.Today.Date.ToShortDateString()"class="form-control" />
                         <span asp-validation-for="Date" class="text-danger"></span>
                     </div>
                     <div class="col-3">
@@ -41,9 +44,17 @@
                     </div>
                     <input asp-for="Type" hidden />
                     <div class="col-3">
-                        <select asp-for="TransactionCategoryId" asp-items="@Model.CategoryDropDown" class="form-control">
-                            <option selected>--Select Expense Category--</option>
-                        </select>
+                        @if (Model.Type == ExpensesApp.Models.Enums.TransactionType.Expense)
+                        {
+                            <select asp-for="TransactionCategoryId" asp-items="@Model.CategoryDropDown" class="form-control">
+                                <option selected>--Select Expense Category--</option>
+                            </select>
+                        }
+                        @if (Model.Type == ExpensesApp.Models.Enums.TransactionType.Income)
+                        {
+                            @*@Model.CategoryDropDown
+                            <input asp-for="TransactionCategoryId">*@
+                        }
                         <span asp-validation-for="TransactionCategoryId" class="text-danger"></span>
 
                     </div>

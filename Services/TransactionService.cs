@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpensesApp.Models.Enums;
 
 namespace ExpensesApp.Services
 {
@@ -67,6 +68,10 @@ namespace ExpensesApp.Services
                 return 1;
             }
             //create
+            if(model.TransactionCategoryId == Guid.Empty)
+            {
+                model.TransactionCategoryId = _db.TransactionCategories.FirstOrDefault(x => x.Type == CategoryType.Income && x.UserId == model.UserId).Id;
+            }
             var newTransaction = new Transaction()
             {
                 TransactionCategoryId = model.TransactionCategoryId,

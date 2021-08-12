@@ -69,10 +69,10 @@
                         </thead>
                         <tbody>
 
-                            @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense))
+                            @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).OrderBy(a => a.Date))
                             {
                                 <tr>
-                                    <td width="20%">@transaction.Date</td>
+                                    <td width="20%">@transaction.Date.ToString("yyyy-MM-dd")</td>
                                     <td width="20%">@transaction.Title</td>
                                     <td width="15%">@transaction.Amount</td>
                                     <td width="20%">@transaction.CategoryName</td>
@@ -124,10 +124,10 @@
                         </thead>
                         <tbody>
 
-                            @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income))
+                            @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).OrderBy(a => a.Date))
                             {
                                 <tr>
-                                    <td width="20%">@transaction.Date</td>
+                                    <td width="20%">@transaction.Date.ToString("yyyy-MM-dd")</td>
                                     <td width="20%">@transaction.Title</td>
                                     <td width="15%">@transaction.Amount</td>
                                     <td width="20%">@transaction.CategoryName</td>
