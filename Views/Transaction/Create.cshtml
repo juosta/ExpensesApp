@@ -50,13 +50,7 @@
                                 <option selected>--Select Expense Category--</option>
                             </select>
                         }
-                        @if (Model.Type == ExpensesApp.Models.Enums.TransactionType.Income)
-                        {
-                            @*@Model.CategoryDropDown
-                            <input asp-for="TransactionCategoryId">*@
-                        }
                         <span asp-validation-for="TransactionCategoryId" class="text-danger"></span>
-
                     </div>
                 </div>
                 <div class="form-group row">
@@ -69,7 +63,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

@@ -70,7 +70,7 @@ namespace ExpensesApp.Services
             //create
             if(model.TransactionCategoryId == Guid.Empty)
             {
-                model.TransactionCategoryId = _db.TransactionCategories.FirstOrDefault(x => x.Type == CategoryType.Income && x.UserId == model.UserId).Id;
+                model.TransactionCategoryId = _db.TransactionCategories.FirstOrDefault(x => x.Type == CategoryType.Income).Id;
             }
             var newTransaction = new Transaction()
             {

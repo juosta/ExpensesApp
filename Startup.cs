@@ -33,6 +33,7 @@ namespace ExpensesApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),
                 ServiceLifetime.Transient);
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromDays(10);
