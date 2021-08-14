@@ -23,134 +23,123 @@
                     <button id="tab-btn-2" class="tab-btn nav-link">Income</button>
                 </li>
             </ul>
-            </div>
-            <div class="col-4">
-                @{
-                    var expenses = Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense);
-                    Double totalExpenses = 0;
-                    foreach (var transaction in expenses)
-                    {
-                        totalExpenses += transaction.Amount;
-                    }
-                    var income = Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income);
-                    Double totalIncome = 0;
-                    foreach (var transaction in income)
-                    {
-                        totalIncome += transaction.Amount;
-                    }
-                    var balance = totalIncome - totalExpenses;
-                }
-                <h3 class="balance text-right">Your balance: @balance</h3>
-                </div>
         </div>
-            <div id="tab-1" class="tab show">
-                @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).Count() > 0)
+        <div class="col-4">
+            @{
+                var expenses = Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense);
+                Double totalExpenses = 0;
+                foreach (var transaction in expenses)
                 {
-                    <table class="table table-bordered table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Date
-                                </th>
-                                <th>
-                                    Expense
-                                </th>
-                                <th>
-                                    Amount
-                                </th>
-                                <th>
-                                    Category
-                                </th>
-                                <th>
-                                    Changes
-                                </th>
-                            </tr>
-
-                        </thead>
-                        <tbody>
-
-                            @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).OrderBy(a => a.Date))
-                            {
-                                <tr>
-                                    <td width="20%">@transaction.Date.ToString("yyyy-MM-dd")</td>
-                                    <td width="20%">@transaction.Title</td>
-                                    <td width="15%">@transaction.Amount</td>
-                                    <td width="20%">@transaction.CategoryName</td>
-                                    <td width="25%">
-                                        <div class="w-100 btn-group">
-                                            <a asp-controller="Transaction" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
-                                            @using (Html.BeginForm("Delete", "Transaction", new { id = transaction.Id }, FormMethod.Post))
-                                            {
-                                                @* Other properties of Model *@
-                                                <button type="submit" class="btn btn-danger mx-1">Delete</button>
-                                            }
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
+                    totalExpenses += transaction.Amount;
                 }
-                else
+                var income = Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income);
+                Double totalIncome = 0;
+                foreach (var transaction in income)
                 {
-                    <p>No items created yet</p>
+                    totalIncome += transaction.Amount;
                 }
-            </div>
-            <div id="tab-2" class="tab">
-                @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).Count() > 0)
-                {
-                    <table class="table table-bordered table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>
-                                    Date
-                                </th>
-                                <th>
-                                    Income
-                                </th>
-                                <th>
-                                    Amount
-                                </th>
-                                <th>
-                                    Category
-                                </th>
-                                <th>
-                                    Changes
-                                </th>
-                            </tr>
-
-                        </thead>
-                        <tbody>
-
-                            @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).OrderBy(a => a.Date))
-                            {
-                                <tr>
-                                    <td width="20%">@transaction.Date.ToString("yyyy-MM-dd")</td>
-                                    <td width="20%">@transaction.Title</td>
-                                    <td width="15%">@transaction.Amount</td>
-                                    <td width="20%">@transaction.CategoryName</td>
-                                    <td width="25%">
-                                        <div class="w-100 btn-group">
-                                            <a asp-controller="Transaction" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
-                                            @using (Html.BeginForm("Delete", "Transaction", new { id = transaction.Id }, FormMethod.Post))
-                                            {
-                                                @* Other properties of Model *@
-                                                <button type="submit" class="btn btn-danger mx-1">Delete</button>
-                                            }
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-
-                }
-                else
-                {
-                    <p>No items created yet</p>
-                }
-            </div>
+                var balance = totalIncome - totalExpenses;
+            }
+            <h3 class="balance text-right">Your balance: @balance</h3>
         </div>
+    </div>
+    <div id="tab-1" class="tab show">
+        @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).Count() > 0)
+        {
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Expense
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Category
+                        </th>
+                        <th>
+                            Changes
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).OrderBy(a => a.Date))
+                    {
+                        <tr>
+                            <td width="20%">@transaction.Date.ToString("yyyy-MM-dd")</td>
+                            <td width="20%">@transaction.Title</td>
+                            <td width="15%">@transaction.Amount</td>
+                            <td width="20%">@transaction.CategoryName</td>
+                            <td width="25%">
+                                <div class="w-100 btn-group">
+                                    <a asp-controller="Transaction" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
+                                    @using (Html.BeginForm("Delete", "Transaction", new { id = transaction.Id }, FormMethod.Post))
+                                    {
+                                        @* Other properties of Model *@
+                                        <button type="submit" class="btn btn-danger mx-1">Delete</button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No items created yet</p>
+        }
+    </div>
+    <div id="tab-2" class="tab">
+        @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).Count() > 0)
+        {
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Income
+                        </th>
+                        <th>
+                            Amount
+                        </th>
+                        <th>
+                            Changes
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).OrderBy(a => a.Date))
+                    {
+                        <tr>
+                            <td width="20%">@transaction.Date.ToString("yyyy-MM-dd")</td>
+                            <td width="30%">@transaction.Title</td>
+                            <td width="25%">@transaction.Amount</td>
+                            <td width="25%">
+                                <div class="w-100 btn-group">
+                                    <a asp-controller="Transaction" asp-action="Update" asp-route-Id="@transaction.Id" class="btn btn-primary mx-1">Update</a>
+                                    @using (Html.BeginForm("Delete", "Transaction", new { id = transaction.Id }, FormMethod.Post))
+                                    {
+                                        @* Other properties of Model *@
+                                        <button type="submit" class="btn btn-danger mx-1">Delete</button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No items created yet</p>
+        }
+    </div>
+</div>

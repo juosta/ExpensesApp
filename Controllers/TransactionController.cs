@@ -45,8 +45,17 @@ namespace ExpensesApp.Controllers
         public async Task<IActionResult> Create(CreateTransactionVM obj)
         {
             obj.UserId = GetUserId().Value;
-            await _transactionService.AddUpdate(obj);
-            return RedirectToAction("Index");
+            obj.CategoryDropDown = await _categoryService.GetCategoryListAsync(obj.UserId);
+            if (!ModelState.IsValid)
+            {
+                //handle error
+            }
+            else
+            {
+                await _transactionService.AddUpdate(obj);
+                return RedirectToAction("Index");
+            }
+            return View(obj);
         }
 
         public async Task<IActionResult> Update(Guid id)
