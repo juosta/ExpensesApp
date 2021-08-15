@@ -47,7 +47,6 @@
                         @if (Model.Type == ExpensesApp.Models.Enums.TransactionType.Expense)
                         {
                             <select asp-for="TransactionCategoryId" asp-items="@Model.CategoryDropDown" class="form-control">
-                                <option selected>--Select Expense Category--</option>
                             </select>
                         }
                         <span asp-validation-for="TransactionCategoryId" class="text-danger"></span>
