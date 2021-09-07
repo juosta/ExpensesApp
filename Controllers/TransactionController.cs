@@ -18,15 +18,25 @@ namespace ExpensesApp.Controllers
             _categoryService = categoryService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(DateTime? filterDateFrom, DateTime? filterDateTo)
         {
             var userId = GetUserId();
             if(userId == null)
             {
                 return RedirectToAction("Login", "Account");
             }
-            var objList = await _transactionService.GetAll(GetUserId().Value);
-            return View(objList);
+
+            DateTime date = DateTime.Now;
+            filterDateFrom ??= new DateTime(date.Year, date.Month, 1); //firstDayOfMonth
+            filterDateTo ??= filterDateFrom.Value.AddMonths(1).AddDays(-1); //lastDayOfMonth
+
+            var result = new TransactionListVM()
+            {
+                DateFrom = filterDateFrom.Value,
+                DateTo = filterDateTo.Value,
+                Transactions = await _transactionService.GetAll(GetUserId().Value, filterDateFrom.Value, filterDateTo.Value)
+            };
+            return View(result);
         }
         // Get create
         public async Task<IActionResult> Create(TransactionType type)

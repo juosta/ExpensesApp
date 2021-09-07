@@ -3,7 +3,6 @@
 
 // Write your JavaScript code.
 
-
 // Show/hide tabs in home transactions list
 const allTabBtns = document.querySelectorAll('[id^="tab-btn"]');
 for (const tabBtn of allTabBtns) {

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ExpensesApp.Models.ViewModels.TransactionVM>
+﻿@model ExpensesApp.Models.ViewModels.TransactionListVM
 @{
     ViewData["Title"] = "Transactions";
 }
@@ -14,7 +14,7 @@
     </div>
     <br />
     <div class="row pt-4">
-        <div class="col-8">
+        <div class="col-4">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <button id="tab-btn-1" class="tab-btn nav-link active">Expenses</button>
@@ -25,26 +25,32 @@
             </ul>
         </div>
         <div class="col-4">
+            <form>
+            </form>
             @{
-                var expenses = Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense);
-                Double totalExpenses = 0;
-                foreach (var transaction in expenses)
-                {
-                    totalExpenses += transaction.Amount;
-                }
-                var income = Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income);
-                Double totalIncome = 0;
-                foreach (var transaction in income)
-                {
-                    totalIncome += transaction.Amount;
-                }
+                DateTime date = Model.DateFrom;
+                var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
+                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                string previousMonthURL = "/?filterDateFrom=" + firstDayOfMonth.AddMonths(-1).ToString("d") + "&filterDateTo=" + lastDayOfMonth.AddMonths(-1).ToString("d");
+                string nextMonthURL = "/?filterDateFrom=" + firstDayOfMonth.AddMonths(1).ToString("d") + "&filterDateTo=" + lastDayOfMonth.AddMonths(1).ToString("d");
+            }
+            <a href="@previousMonthURL" class="btn btn-primary mx-1"><</a>
+            @date.ToString("MMMM")
+            <a href="@nextMonthURL" class="btn btn-primary mx-1">></a>
+        </div>
+        <div class="col-4">
+            @{
+                var expenses = Model.Transactions.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense);
+                Double totalExpenses = expenses.Sum(i => i.Amount);
+                var income = Model.Transactions.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income);
+                Double totalIncome = income.Sum(i => i.Amount);
                 var balance = totalIncome - totalExpenses;
             }
             <h3 class="balance text-right">Your balance: @balance</h3>
         </div>
     </div>
     <div id="tab-1" class="tab show">
-        @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).Count() > 0)
+        @if (Model.Transactions.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).Count() > 0)
         {
             <table class="table table-bordered table-striped" style="width:100%">
                 <thead>
@@ -68,7 +74,7 @@
                 </thead>
                 <tbody>
 
-                    @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).OrderBy(a => a.Date))
+                    @foreach (var transaction in Model.Transactions.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).OrderBy(a => a.Date))
                     {
                         <tr>
                             <td width="20%">@transaction.Date.ToString("yyyy-MM-dd")</td>
@@ -87,6 +93,11 @@
                             </td>
                         </tr>
                     }
+                    <tr>
+                        <td>
+                            <div>Total amount: @Model.Transactions.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Expense).Sum(x => x.Amount)</div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         }
@@ -96,7 +107,7 @@
         }
     </div>
     <div id="tab-2" class="tab">
-        @if (Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).Count() > 0)
+        @if (Model.Transactions.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).Count() > 0)
         {
             <table class="table table-bordered table-striped" style="width:100%">
                 <thead>
@@ -116,7 +127,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var transaction in Model.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).OrderBy(a => a.Date))
+                    @foreach (var transaction in Model.Transactions.Where(x => x.Type == ExpensesApp.Models.Enums.TransactionType.Income).OrderBy(a => a.Date))
                     {
                         <tr>
                             <td width="20%">@transaction.Date.ToString("yyyy-MM-dd")</td>

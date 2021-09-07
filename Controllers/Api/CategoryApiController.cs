@@ -12,7 +12,6 @@ namespace ExpensesApp.Controllers.Api
     [ApiController]
     public class CategoryApiController : Controller
     {
-
         private readonly ICategoryService _categoryService;
         public CategoryApiController(ICategoryService categoryService)
         {

@@ -27,7 +27,7 @@ namespace ExpensesApp.Controllers
 
         public IActionResult Create()
         {
-            CategoryVM categoryVM = new CategoryVM()
+            var categoryVM = new CategoryVM()
             {
                 CategoryTypeDropDown = Helper.GetDropDownItems<CategoryType>()
             };
