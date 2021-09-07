@@ -21,9 +21,15 @@ namespace ExpensesApp.Services
             _categoryService = categoryService;
         }
 
-        public async Task<List<TransactionVM>> GetAll(Guid userId)
+        public async Task<List<TransactionVM>> GetAll(Guid userId, DateTime? filterDateFrom = null, DateTime? filterDateTo = null)
         {
-            return await _db.Transactions.Where(x => x.UserId == userId).Select(i => new TransactionVM
+            if (filterDateFrom == null && filterDateTo == null)
+            {
+                DateTime date = DateTime.Now;
+                filterDateFrom = new DateTime(date.Year, date.Month, 1); //firstDayOfMonth
+                filterDateTo = filterDateFrom.Value.AddMonths(1).AddDays(-1); //lastDayOfMonth
+            }
+            return await _db.Transactions.Where(x => x.UserId == userId && x.Date > filterDateFrom && x.Date < filterDateTo).Select(i => new TransactionVM
             {
                 Id = i.Id,
                 Date = i.Date,
