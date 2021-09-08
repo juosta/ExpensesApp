@@ -75,7 +75,8 @@ h2 > a:hover{
 }
 
 body {
-    background-image: url("https://images.unsplash.com/photo-1508615070457-7baeba4003ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80");
+    /*background-image: url("https://images.unsplash.com/photo-1508615070457-7baeba4003ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80");*/
+    background-image: url("../Gradient.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -145,3 +146,32 @@ body {
     .btn.x-button:hover {
         color: #D37F5B;
     }
+
+.prev-month-label, .next-month-label {
+    position: absolute;
+    background-color: rgba(255,255,255,0.8);
+    color: #000;
+    padding: 4px;
+    border: 1px solid;
+    font-size: 12px;
+    border-radius: 3px;
+    visibility: hidden;
+    top: 6px;
+    opacity: 0;
+    transition: all 0.5s;
+}
+.prev-month-label {
+    left: -79px;
+}
+
+.prev-month:hover + .prev-month-label {
+    visibility: visible;
+    opacity: 1;
+}
+.next-month:hover + .next-month-label {
+    visibility: visible;
+    opacity: 1;
+}
+rect {
+    fill: rgba(255,255,255, 0.4);
+}
