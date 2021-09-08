@@ -14,7 +14,7 @@
     </div>
     <br />
     <div class="row pt-4">
-        <div class="col-4">
+        <div class="col-3">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
                     <button id="tab-btn-1" class="tab-btn nav-link active">Expenses</button>
@@ -24,9 +24,8 @@
                 </li>
             </ul>
         </div>
-        <div class="col-4">
-            <form>
-            </form>
+        <div class="col-5">
+            
             @{
                 DateTime date = Model.DateFrom;
                 var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
@@ -35,8 +34,14 @@
                 string nextMonthURL = "/?filterDateFrom=" + firstDayOfMonth.AddMonths(1).ToString("d") + "&filterDateTo=" + lastDayOfMonth.AddMonths(1).ToString("d");
             }
             <a href="@previousMonthURL" class="btn btn-primary mx-1"><</a>
-            @date.ToString("MMMM")
+                @date.ToString("MMMM")
             <a href="@nextMonthURL" class="btn btn-primary mx-1">></a>
+            <button id="filterBtn" class="btn btn-info">Filter</button>
+            <form method="get" class="filter-form" asp-action="Index">
+                <input asp-for="DateFrom" type="date" name="filterDateFrom" value="@Model.DateFrom.ToString("d")" />
+                <input asp-for="DateTo" type="date" name="filterDateTo" value="@Model.DateTo.ToString("d")" />
+                <input type="submit" name="" value="Filter" />
+            </form>
         </div>
         <div class="col-4">
             @{

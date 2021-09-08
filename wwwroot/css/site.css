@@ -85,6 +85,10 @@ body {
     display: none;
 }
 
+.nav-tabs {
+    border: none;
+}
+
 .show{
     display: block;
     opacity: 1;

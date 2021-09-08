@@ -42,7 +42,6 @@ namespace ExpensesApp.Controllers
                 {
                     var user = await _userManager.FindByNameAsync(model.Email);
                     HttpContext.Session.SetString("ssuserName", user.Name);
-                    //var userName = HttpContext.Session.GetString("ssuserName");
                     return RedirectToAction("Index", "Transaction");
                 }
                 ModelState.AddModelError("", "Invalid login attempt");
