@@ -28,10 +28,12 @@
 
             @{
                 DateTime date = Model.DateFrom;
-                var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
-                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-                string previousMonthURL = "/?filterDateFrom=" + firstDayOfMonth.AddMonths(-1).ToString("d") + "&filterDateTo=" + lastDayOfMonth.AddMonths(-1).ToString("d");
-                string nextMonthURL = "/?filterDateFrom=" + firstDayOfMonth.AddMonths(1).ToString("d") + "&filterDateTo=" + lastDayOfMonth.AddMonths(1).ToString("d");
+                var prevMonth1st = new DateTime(date.Year, date.AddMonths(-1).Month, 1);
+                var prevMonthLast = prevMonth1st.AddMonths(1).AddDays(-1);
+                var nextMonth1st = new DateTime(date.Year, date.AddMonths(1).Month, 1);
+                var nextMonthLast = nextMonth1st.AddMonths(1).AddDays(-1);
+                string previousMonthURL = "/?filterDateFrom=" + prevMonth1st.ToString("d") + "&filterDateTo=" + prevMonthLast.ToString("d");
+                string nextMonthURL = "/?filterDateFrom=" + nextMonth1st.ToString("d") + "&filterDateTo=" + nextMonthLast.ToString("d");
             }
             <a href="@previousMonthURL" class="btn btn-primary mx-1 prev-month"><</a>
             <span class="prev-month-label">Previous Month</span>
@@ -66,7 +68,7 @@
                             Date
                         </th>
                         <th>
-                            Expense
+                            Title
                         </th>
                         <th>
                             Amount
